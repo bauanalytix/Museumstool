@@ -353,15 +353,27 @@ window.createPDF = async function () {
         };
 
         const addSectionTitle = (title) => {
-            checkPageBreak(16);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(12);
-            doc.text(title, 20, y);
-            y += 2;
-            doc.setDrawColor(210);
-            doc.line(20, y, 190, y);
-            y += 6;
-        };
+             checkPageBreak(16);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+
+    // Rot
+    doc.setTextColor(170, 0, 20);
+
+    doc.text(title, 20, y);
+
+    y += 2;
+
+    // dünne rote Linie
+    doc.setDrawColor(200, 40, 60);
+    doc.line(20, y, 190, y);
+
+    y += 6;
+
+    // zurück auf schwarz
+    doc.setTextColor(0, 0, 0);
+};
 
         const addLabelValue = (label, value) => {
             doc.setFont('helvetica', 'bold');
@@ -428,7 +440,25 @@ window.createPDF = async function () {
     }));
 
 try {
-    doc.addImage(logoBase64, 'JPEG', 20, y - 6, 42, 12);
+
+    // Logo rechts oben platzieren
+    const logoWidth = 42;
+    const logoHeight = 11;
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    const xLogo = pageWidth - logoWidth - 20;
+    const yLogo = 12;
+
+    doc.addImage(
+        logoBase64,
+        'JPEG',
+        xLogo,
+        yLogo,
+        logoWidth,
+        logoHeight
+    );
+
 } catch(e) {
     console.warn('Logo konnte nicht ins PDF geladen werden');
 }
@@ -436,7 +466,12 @@ try {
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(15);
-        doc.text('Museum – Schadstoff-Erstsichtung', 68, y);
+        doc.setTextColor(170, 0, 20);
+
+doc.text('Museum – Schadstoff-Erstsichtung', 20, 18);
+
+doc.setTextColor(0, 0, 0);
+        doc.text('Museum – Schadstoff-Erstsichtung', 20, 18);
 
         y += 10;
 
