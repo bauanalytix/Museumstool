@@ -245,6 +245,10 @@ Dieses Tool dient ausschließlich einer orientierenden Ersteinschätzung möglic
 
 <button onclick="createPDF()">PDF-Bericht erstellen</button>
 
+<button onclick="clearAllData()" style="background:#777; margin-left:10px;">
+Alle Daten löschen
+</button>
+
 </div>
 
 <script>
@@ -583,7 +587,17 @@ doc.setTextColor(0, 0, 0);
     document.querySelectorAll('input, textarea, select').forEach(el => {
     el.addEventListener('change', saveFormData);
 });
-    
+
+    function clearAllData() {
+
+    if (!confirm('Wirklich alle gespeicherten Daten löschen?')) {
+        return;
+    }
+
+    localStorage.removeItem('museumToolData');
+
+    location.reload();
+}
 </script>
 
 </body>
