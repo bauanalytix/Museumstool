@@ -419,19 +419,20 @@ window.createPDF = async function () {
             });
         };
 
-        const logo = new Image();
-        logo.src = 'bauanalytix_rz_farbe einzeln_klein.jpg';
+        const logoBase64 = await fetch('bauanalytix_rz_farbe einzeln_klein.jpg')
+    .then(res => res.blob())
+    .then(blob => new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+    }));
 
-        await new Promise((resolve) => {
-            logo.onload = resolve;
-            logo.onerror = resolve;
-        });
-
-        try {
-            doc.addImage(logo, 'JPG', 20, y - 6, 42, 12);
-        } catch(e) {
-            console.warn('Logo konnte nicht ins PDF geladen werden');
-        }
+try {
+    doc.addImage(logoBase64, 'JPEG', 20, y - 6, 42, 12);
+} catch(e) {
+    console.warn('Logo konnte nicht ins PDF geladen werden');
+}
+        
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(15);
