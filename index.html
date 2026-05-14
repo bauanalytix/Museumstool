@@ -501,6 +501,53 @@ window.createPDF = async function () {
 
 };
 
+    function saveFormData() {
+
+    const data = {
+        person: document.getElementById('person').value,
+        museum: document.getElementById('museum').value,
+        adresse: document.getElementById('adresse').value,
+        baujahr: document.getElementById('baujahr').value,
+        freitext: document.getElementById('freitext').value,
+        umbau: document.getElementById('umbau').value,
+        schimmelGebaeude: document.getElementById('schimmelGebaeude').value,
+        schimmelObjekte: document.getElementById('schimmelObjekte').value
+    };
+
+    localStorage.setItem('museumToolData', JSON.stringify(data));
+}
+
+    function loadFormData() {
+
+    const saved = localStorage.getItem('museumToolData');
+
+    if (!saved) return;
+
+    const data = JSON.parse(saved);
+
+    document.getElementById('person').value = data.person || '';
+    document.getElementById('museum').value = data.museum || '';
+    document.getElementById('adresse').value = data.adresse || '';
+    document.getElementById('baujahr').value = data.baujahr || '';
+    document.getElementById('freitext').value = data.freitext || '';
+
+    document.getElementById('umbau').value = data.umbau || 'nein';
+    document.getElementById('schimmelGebaeude').value = data.schimmelGebaeude || 'nein';
+    document.getElementById('schimmelObjekte').value = data.schimmelObjekte || 'nein';
+
+    toggleBauteile();
+    toggleSchimmelFoto();
+    toggleObjektFoto();
+}
+
+    window.onload = function() {
+    loadFormData();
+};
+
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+    el.addEventListener('change', saveFormData);
+});
+    
 </script>
 
 </body>
