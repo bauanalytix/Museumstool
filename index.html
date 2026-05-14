@@ -420,7 +420,7 @@ window.createPDF = async function () {
         };
 
         const logo = new Image();
-        logo.src = 'logo.png';
+        logo.src = 'bauanalytix_rz_farbe einzeln_klein';
 
         await new Promise((resolve) => {
             logo.onload = resolve;
@@ -428,7 +428,7 @@ window.createPDF = async function () {
         });
 
         try {
-            doc.addImage(logo, 'PNG', 20, y - 6, 42, 12);
+            doc.addImage(logo, 'JPG', 20, y - 6, 42, 12);
         } catch(e) {
             console.warn('Logo konnte nicht ins PDF geladen werden');
         }
