@@ -419,11 +419,25 @@ window.createPDF = async function () {
             });
         };
 
+        const logo = new Image();
+        logo.src = 'logo.png';
+
+        await new Promise((resolve) => {
+            logo.onload = resolve;
+            logo.onerror = resolve;
+        });
+
+        try {
+            doc.addImage(logo, 'PNG', 20, y - 6, 42, 12);
+        } catch(e) {
+            console.warn('Logo konnte nicht ins PDF geladen werden');
+        }
+
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(15);
-        doc.text('Museum – Schadstoff-Erstsichtung', 20, y);
+        doc.text('Museum – Schadstoff-Erstsichtung', 68, y);
 
-        y += 7;
+        y += 10;
 
         doc.setFont('helvetica', 'italic');
         doc.setFontSize(8.5);
